@@ -1,0 +1,24 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet id="16" author="maryuhin.z@gmail.com">
+       <sql>
+           INSERT into neweditions ( "neweditionId","newbookId","newcostId",neweditionname,newnumofcopies)
+           SELECT  ed."editionId", ed."bookId", ed."costId" , ed.editionname, w."numofcopies"
+           FROM editions ed
+           WHERE ed.editionId = '1'
+       </sql>
+        <sql>
+            INSERT into neweditions ( "neweditionId","newbookId","newcostId",neweditionname,newnumofcopies)
+            SELECT  ed."editionId", ed."bookId", ed."costId" , ed.editionname, w."numofcopies"
+            FROM editions ed
+            WHERE ed.editionId = '2'
+        </sql>
+        <sql>
+            INSERT into neweditions ( "neweditionId","newbookId","newcostId",neweditionname,newnumofcopies)
+            SELECT  ed."editionId", ed."bookId", ed."costId" , ed.editionname, w."numofcopies"
+            FROM editions ed
+            WHERE ed.editionId = '3'
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

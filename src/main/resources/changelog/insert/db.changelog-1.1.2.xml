@@ -1,0 +1,35 @@
+<databaseChangeLog xmlns = "http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd"  >
+    <changeSet id="7" author="maryuhin.z@gmail.com" runOnChange="true" >
+        <insert tableName="book">
+            <column name="authorId" value="1"></column>
+            <column name="bookname" value="The Count of Monte Cristo"></column>
+            <column name="dateofpublication" value="1844"></column>
+            <column name="editionId" value="3"></column>
+            <column name="screenadaptationId" value="2"></column>
+        </insert>
+        <rollback>
+            DELETE FROM book WHERE bookname LIKE 'The Count of Monte Cristo'
+        </rollback>
+        <insert tableName="book">
+            <column name="authorId" value="3"></column>
+            <column name="bookname" value="Roadside Picnic"></column>
+            <column name="dateofpublication" value="1972"></column>
+            <column name="editionId" value="1"></column>
+            <column name="screenadaptationId" value="1"></column>
+        </insert>
+        <rollback>
+            DELETE FROM book WHERE bookname LIKE 'Roadside Picnic'
+        </rollback>
+        <insert tableName="book">
+            <column name="authorId" value="2"></column>
+            <column name="bookname" value="The Headless Horseman"></column>
+            <column name="dateofpublication" value="1865"></column>
+            <column name="editionId" value="2"></column>
+            <column name="screenadaptationId" value="3"></column>
+        </insert>
+        <rollback>
+            DELETE FROM book WHERE bookname LIKE 'The Headless Horseman'
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

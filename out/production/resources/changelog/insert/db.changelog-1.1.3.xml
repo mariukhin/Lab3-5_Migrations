@@ -1,0 +1,30 @@
+<databaseChangeLog xmlns = "http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd"  >
+    <changeSet id="8" author="maryuhin.z@gmail.com" runOnChange="true" >
+        <insert tableName="cost">
+            <column name="number" value="150"></column>
+            <column name="high" value="5"></column>
+            <column name="editionId" value="1"></column>
+        </insert>
+        <rollback>
+            DELETE FROM cost WHERE editionID = 1
+        </rollback>
+        <insert tableName="cost">
+            <column name="number" value="100"></column>
+            <column name="high" value="4"></column>
+            <column name="editionId" value="2"></column>
+        </insert>
+        <rollback>
+            DELETE FROM cost WHERE editionID = 2
+        </rollback>
+        <insert tableName="cost">
+            <column name="number" value="90"></column>
+            <column name="high" value="6"></column>
+            <column name="editionId" value="3"></column>
+        </insert>
+        <rollback>
+            DELETE FROM cost WHERE editionID = 3
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

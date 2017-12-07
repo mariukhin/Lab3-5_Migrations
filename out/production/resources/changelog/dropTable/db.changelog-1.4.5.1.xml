@@ -1,0 +1,22 @@
+<databaseChangeLog xmlns = "http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd"  >
+    <changeSet id="15" author="maryuhin.z@gmail.com" runOnChange="true" >
+        <createTable tableName ="neweditions">
+            <column name = "neweditionId" type ="BIGINT" autoIncrement = "true">
+                <constraints nullable="false" primaryKey="true"></constraints>
+            </column>
+            <column name = "neweditionname" type="VARCHAR(255)" >
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="newnumofcopies" type="INTEGER">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name = "newbookId" type="INTEGER">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="newcostId" type="INTEGER">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

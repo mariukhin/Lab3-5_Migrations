@@ -1,0 +1,32 @@
+<databaseChangeLog xmlns = "http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd"  >
+    <changeSet id="10" author="maryuhin.z@gmail.com" runOnChange="true" >
+        <insert tableName="screenadaptation">
+            <column name="screenadaptationname" value="Stalker"></column>
+            <column name="year" value="1979"></column>
+            <column name="mark" value="8"></column>
+            <column name="bookId" value="2"></column>
+        </insert>
+        <rollback>
+            DELETE FROM screenadaptation WHERE screenadaptationname LIKE 'Stalker'
+        </rollback>
+        <insert tableName="screenadaptation">
+            <column name="screenadaptationname" value="The Prisoner of Chateau d"></column>
+            <column name="year" value="1988"></column>
+            <column name="mark" value="6"></column>
+            <column name="bookId" value="1"></column>
+        </insert>
+        <rollback>
+            DELETE FROM screenadaptation WHERE screenadaptationname LIKE 'The Prisoner of Chateau d'
+        </rollback>
+        <insert tableName="screenadaptation">
+            <column name="screenadaptationname" value="The Headless Hourseman"></column>
+            <column name="year" value="1972"></column>
+            <column name="mark" value="7"></column>
+            <column name="bookId" value="3"></column>
+        </insert>
+        <rollback>
+            DELETE FROM screenadaptation WHERE screenadaptationname LIKE 'The Headless Hourseman'
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

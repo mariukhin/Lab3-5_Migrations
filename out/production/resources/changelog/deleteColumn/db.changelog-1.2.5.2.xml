@@ -1,0 +1,11 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+<changeSet id="12" author="maryuhin.z@gmail.com" runOnChange="true">
+   <sql>
+       UPDATE cost SET newNum = SUBSTRING(,1,6);
+   </sql>
+    <rollback>
+        UPDATE Person SET newNum = '';
+    </rollback>
+</changeSet>
+</databaseChangeLog>

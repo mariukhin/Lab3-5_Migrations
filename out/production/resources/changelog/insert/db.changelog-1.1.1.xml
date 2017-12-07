@@ -1,0 +1,29 @@
+<databaseChangeLog xmlns = "http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd"  >
+    <changeSet id="6" author="maryuhin.z@gmail.com" runOnChange="true" >
+        <insert tableName="author">
+            <column name = "authorname" value = "Alexandre Dumas"></column>
+            <column name = "numofbooks" value="80"></column>
+            <column name = "series" value="4"></column>
+        </insert>
+        <rollback>
+            DELETE FROM author WHERE authorname LIKE 'Alexandre Dumas'
+        </rollback>
+        <insert tableName="author">
+            <column name = "authorname" value = "Thomas Mayne Reid"></column>
+            <column name = "numofbooks" value="60"></column>
+            <column name = "series" value="6"></column>
+        </insert>
+        <rollback>
+            DELETE FROM author WHERE authorname LIKE 'Thomas Mayne Reid'
+        </rollback>
+        <insert tableName="author">
+            <column name = "authorname" value = "Strugatsky Brothers"></column>
+            <column name = "numofbooks" value="24"></column>
+            <column name = "series" value="5"></column>
+        </insert>
+        <rollback>
+            DELETE FROM author WHERE authorname LIKE 'Strugatsky Brothers'
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

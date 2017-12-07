@@ -1,0 +1,32 @@
+<databaseChangeLog xmlns = "http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd"  >
+    <changeSet id="9" author="maryuhin.z@gmail.com" runOnChange="true" >
+        <insert tableName="edition">
+            <column name = "editionname" value="Фолио"></column>
+            <column name = "numofcopies" value="12807"></column>
+            <column name = "bookId" value="2"></column>
+            <column name = "costId" value="1"></column>
+        </insert>
+        <rollback>
+            DELETE FROM edition WHERE bookId = 2
+        </rollback>
+        <insert tableName="edition">
+            <column name = "editionname" value="Азбука"></column>
+            <column name = "numofcopies" value="13000"></column>
+            <column name = "bookId" value="3"></column>
+            <column name = "costId" value="2"></column>
+        </insert>
+        <rollback>
+            DELETE FROM edition WHERE bookId = 3
+        </rollback>
+        <insert tableName="edition">
+            <column name = "editionname" value="Лениздат"></column>
+            <column name = "numofcopies" value="24049"></column>
+            <column name = "bookId" value="1"></column>
+            <column name = "costId" value="3"></column>
+        </insert>
+        <rollback>
+            DELETE FROM edition WHERE bookId = 1
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

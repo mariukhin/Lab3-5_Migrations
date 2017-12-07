@@ -1,0 +1,6 @@
+<changeSet>
+    <delete catalogName="Books"
+            schemaName="Books" >
+    </delete>
+    <createSchema schemaName="Books" catalogName="Books"></createSchema>
+</changeSet>
