@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd" logicalFilePath="4.0-delete_all_rows.xml">
+    <changeSet id="delete_all_rows" author="maryuhin.zAgmail.com">
+        <sql>
+            DELETE FROM "author";
+            DELETE FROM "book";
+            DELETE FROM "cost";
+            DELETE FROM "edition";
+            DELETE FROM "screenadaptation";
+        </sql>
+    </changeSet>
+</databaseChangeLog>

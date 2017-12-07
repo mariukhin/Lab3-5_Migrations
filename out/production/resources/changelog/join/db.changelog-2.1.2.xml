@@ -1,8 +1,9 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
-   <changeSet id="14" author="maryuhin.z@gmail.com">
-       <sql>
-           DELETE FROM "cost" WHERE "costId" = 1;
-       </sql>
-   </changeSet>
+    <changeSet id="join" author="maryuhin.z@gmail.com">
+        <sql>
+            SELECT * FROM "author" FULL JOIN "book" ON "author"."authorId" = "book"."authorId";
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

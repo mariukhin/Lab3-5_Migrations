@@ -1,20 +1,23 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
    <changeSet id="14" author="maryuhin.z@gmail.com">
-       <update tableName="cost">
-           <column name="number"></column>
-           <where>
-               "costId"='1'
-           </where>
-       </update>
-       <rollback>
-           <update tableName="cost">
-               <column name="number" value="150" type="INT">
-               </column>
-               <where>
-                   "costId"='1'
-               </where>
-           </update>
-       </rollback>
+       <!--<update tableName="cost">-->
+           <!--<column name="number"></column>-->
+           <!--<where>-->
+               <!--"costId"='1'-->
+           <!--</where>-->
+       <!--</update>-->
+       <!--<rollback>-->
+           <!--<update tableName="cost">-->
+               <!--<column name="number" value="150" type="INTEGER">-->
+               <!--</column>-->
+               <!--<where>-->
+                   <!--"costId"='1'-->
+               <!--</where>-->
+           <!--</update>-->
+       <!--</rollback>-->
+       <sql>
+           DELETE FROM "cost" WHERE "costId" = 1;
+       </sql>
    </changeSet>
 </databaseChangeLog>
