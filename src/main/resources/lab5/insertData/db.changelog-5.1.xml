@@ -1,0 +1,33 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet id="insertauthor" author="maryuhin.z@gmail.com">
+        <sql>
+            CREATE FUNCTION reffunc1()RETURNS SETOF author AS
+            DECLARE
+                author_id integer;
+                authorname VARCHAR;
+                numberofbooks integer;
+                series integer;
+            BEGIN
+                author_id := 1;
+                FOR author_id IN 1..2000 LOOP
+                  numberofbooks :='1289'+ author_id;
+                  IF author_id BETWEEN 1 AND 67 THEN
+                    authorname := 'Alex';
+                  ELSIF author_id BETWEEN 85 AND 259 THEN
+                    authorname := 'Max';
+                  ELSE 'Ivan' END IF;
+
+                  IF author_id BETWEEN 1 AND 67 THEN
+                    series := '9';
+                  ELSIF author_id BETWEEN 85 AND 259 THEN
+                    series := '23';
+                  ELSE '13' END IF;
+                  INSERT INTO author values (authorname,numberofbooks,series);
+                  author_id :=author_id + 1;
+                  END LOOP;
+            END
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
