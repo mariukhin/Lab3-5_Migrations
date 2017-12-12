@@ -1,0 +1,41 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet id="insertcost" author="maryuhin.z@gmail.com">
+        <sql>
+            DROP FUNCTION lab5_cost();
+            CREATE OR REPLACE FUNCTION lab5_cost()
+            returns void
+            AS $$
+            DECLARE
+            costId BIGINT;
+            number INTEGER ;
+            high INTEGER;
+            editionId BIGINT;
+            BEGIN
+            costId := 1;
+            FOR costId IN 1..2000 LOOP
+            number :=130 + costId ;
+            IF costId BETWEEN 1 AND 78 THEN
+            high := 7;
+            ELSIF costId BETWEEN 85 AND 259 THEN
+            high := 9;
+            ELSE high :=12;
+            END IF;
+
+            IF costId BETWEEN 1 AND 84 THEN
+            editionId := 18;
+            ELSIF costId BETWEEN 183 AND 748 THEN
+            editionId := 13;
+            ELSE editionId := 39;
+            END IF;
+            INSERT INTO public.cost values (costId,number,high,editionId);
+            costId :=costId + 1;
+            END LOOP;
+            END;
+            $$
+            LANGUAGE plpgsql;
+            SELECT lab5_cost();
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

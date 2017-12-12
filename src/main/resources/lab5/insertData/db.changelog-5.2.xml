@@ -2,24 +2,45 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
     <changeSet id="insertbook" author="maryuhin.z@gmail.com">
         <sql>
-            CREATE FUNCTION reffunc2() RETURNS SETOF book AS
-            DECLARE
-              book_id integer;
-              bookname VARCHAR;
-              dater integer;
-            BEGIN
-              book_id := 1;
-              FOR author_id IN 1..2000 LOOP
-                bookname :='Hourseman'+ CAST(book_id AS VARCHAR) ;
-                IF book_id BETWEEN 1 AND 67 THEN
-                  dater := '1973';
-                ELSIF book_id BETWEEN 85 AND 259 THEN
-                  authorname := '1753';
-                ELSE '1934' END IF;
-                INSERT INTO book values (bookname,dater);
-                book_id :=book_id + 1;
-                END LOOP;
-            END
+            DROP FUNCTION lab5_book();
+            CREATE OR REPLACE FUNCTION lab5_book()
+            returns void
+            AS $$
+              DECLARE
+                bookId BIGINT;
+                bookname VARCHAR;
+                dateofpublication INTEGER;
+                authorId BIGINT;
+                editionId BIGINT;
+                screenadaptationId BIGINT;
+              BEGIN
+                bookId := 1;
+                screenadaptationId := 1;
+                editionId := 1;
+                FOR i IN 1..2000 LOOP
+                  bookname := 'Hourseman'|| bookId ;
+                  IF bookId BETWEEN 1 AND 67 THEN
+                    dateofpublication := 1973;
+                  ELSIF bookId BETWEEN 85 AND 259 THEN
+                    dateofpublication := 1753;
+                  ELSE dateofpublication := 1934;
+                  END IF;
+
+                  IF bookId BETWEEN 1 AND 84 THEN
+                    authorId := 2;
+                  ELSIF bookId BETWEEN 98 AND 389 THEN
+                    authorId := 13;
+                  ELSE authorId := 56;
+                  END IF;
+                  INSERT INTO public.book values (bookId,bookname,dateofpublication,authorId,editionId,screenadaptationId);
+                  bookId :=bookId + 1;
+                  editionId := editionId +1;
+                  screenadaptationId := screenadaptationId + 1;
+                  END LOOP;
+              END;
+            $$
+            LANGUAGE plpgsql;
+            SELECT lab5_book();
         </sql>
     </changeSet>
 

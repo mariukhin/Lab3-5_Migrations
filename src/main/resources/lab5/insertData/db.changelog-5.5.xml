@@ -1,0 +1,45 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet id="insertscreenadaptation" author="maryuhin.z@gmail.com">
+        <sql>
+            DROP FUNCTION lab5_screenadaptation();
+            CREATE OR REPLACE FUNCTION lab5_screenadaptation()
+            returns void
+            AS $$
+            DECLARE
+            screenadaptationId BIGINT;
+            screenadaptationname VARCHAR ;
+            year INTEGER;
+            mark INTEGER;
+            bookId BIGINT;
+
+            BEGIN
+            screenadaptationId := 1;
+            year := 1900;
+            FOR i IN 1..2000 LOOP
+            screenadaptationname :='Monte Cristo'||screenadaptationId;
+            IF screenadaptationId BETWEEN 1 AND 278 THEN
+            bookId := 12;
+            ELSIF screenadaptationId BETWEEN 369 AND 689 THEN
+            bookId := 23;
+            ELSE bookId :=11;
+            END IF;
+
+            IF screenadaptationId BETWEEN 1 AND 392 THEN
+            mark := 4;
+            ELSIF screenadaptationId BETWEEN 489 AND 894 THEN
+            mark := 5;
+            ELSE mark :=2;
+            END IF;
+
+            INSERT INTO public.screenadaptation values (screenadaptationId,screenadaptationname,year,mark,bookId);
+            screenadaptationId :=screenadaptationId + 1;
+            year :=year +1;
+            END LOOP;
+            END;
+            $$
+            LANGUAGE plpgsql;
+            SELECT lab5_screenadaptation();
+        </sql>
+    </changeSet>
+</databaseChangeLog>

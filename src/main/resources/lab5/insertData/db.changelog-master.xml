@@ -3,5 +3,8 @@
 
     <include file="C:\Users\Max\Desktop\Lab3.2\src\main\resources\lab5\insertData\db.changelog-5.1.xml"></include>
     <include file="C:\Users\Max\Desktop\Lab3.2\src\main\resources\lab5\insertData\db.changelog-5.2.xml"></include>
+    <include file="C:\Users\Max\Desktop\Lab3.2\src\main\resources\lab5\insertData\db.changelog-5.3.xml"></include>
+    <include file="C:\Users\Max\Desktop\Lab3.2\src\main\resources\lab5\insertData\db.changelog-5.4.xml"></include>
+    <include file="C:\Users\Max\Desktop\Lab3.2\src\main\resources\lab5\insertData\db.changelog-5.5.xml"></include>
 
 </databaseChangeLog>

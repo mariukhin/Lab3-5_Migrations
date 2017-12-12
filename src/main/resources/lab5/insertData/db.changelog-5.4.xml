@@ -1,0 +1,49 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <changeSet id="insertedition" author="maryuhin.z@gmail.com">
+        <sql>
+            DROP FUNCTION lab5_edition();
+            CREATE OR REPLACE FUNCTION lab5_edition()
+            returns void
+            AS $$
+            DECLARE
+            editionId BIGINT;
+            editionname VARCHAR ;
+            numofcopies INTEGER;
+            bookId BIGINT;
+            costId BIGINT;
+            BEGIN
+            editionId := 1;
+            FOR i IN 1..2000 LOOP
+            editionname :='Volga'|| editionId;
+            IF editionId BETWEEN 1 AND 86 THEN
+             numofcopies := 12994;
+            ELSIF editionId BETWEEN 178 AND 589 THEN
+            numofcopies := 12343;
+            ELSE numofcopies :=29400;
+            END IF;
+
+            IF editionId BETWEEN 1 AND 391 THEN
+            bookId := 18;
+            ELSIF editionId BETWEEN 435 AND 748 THEN
+            bookId := 7;
+            ELSE bookId :=28;
+            END IF;
+
+            IF editionId BETWEEN 1 AND 239 THEN
+            costId := 23;
+            ELSIF editionId BETWEEN 384 AND 598 THEN
+            costId := 4;
+            ELSE costId :=15;
+            END IF;
+
+            INSERT INTO public.edition values (editionId,editionname,numofcopies,bookId,costId);
+            editionId :=editionId + 1;
+            END LOOP;
+            END;
+            $$
+            LANGUAGE plpgsql;
+            SELECT lab5_edition();
+        </sql>
+    </changeSet>
+</databaseChangeLog>

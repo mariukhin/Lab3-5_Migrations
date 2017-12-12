@@ -2,31 +2,39 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
     <changeSet id="insertauthor" author="maryuhin.z@gmail.com">
         <sql>
-            CREATE FUNCTION reffunc1()RETURNS SETOF author AS
+            DROP FUNCTION lab5_author();
+            CREATE OR REPLACE FUNCTION lab5_author()
+            returns void
+            AS $$
             DECLARE
-                author_id integer;
-                authorname VARCHAR;
-                numberofbooks integer;
-                series integer;
+              authorId BIGINT;
+              authorname VARCHAR;
+              numofbooks INTEGER;
+              series INTEGER;
             BEGIN
-                author_id := 1;
-                FOR author_id IN 1..2000 LOOP
-                  numberofbooks :='1289'+ author_id;
-                  IF author_id BETWEEN 1 AND 67 THEN
-                    authorname := 'Alex';
-                  ELSIF author_id BETWEEN 85 AND 259 THEN
-                    authorname := 'Max';
-                  ELSE 'Ivan' END IF;
+              authorId := 1;
+              FOR i IN 1..2000 LOOP
+                numofbooks :=1289 + authorId;
+                IF authorId BETWEEN 1 AND 67  THEN
+                  authorname := 'Alex';
+                ELSIF authorId BETWEEN 85 AND 259  THEN
+                  authorname := 'Max';
+                ELSE authorname :='Ivan';
+                END IF;
 
-                  IF author_id BETWEEN 1 AND 67 THEN
-                    series := '9';
-                  ELSIF author_id BETWEEN 85 AND 259 THEN
-                    series := '23';
-                  ELSE '13' END IF;
-                  INSERT INTO author values (authorname,numberofbooks,series);
-                  author_id :=author_id + 1;
-                  END LOOP;
-            END
+                IF authorId BETWEEN 1 AND 67 THEN
+                  series := 9;
+                ELSIF authorId BETWEEN 85 AND 259 THEN
+                  series := 23;
+                ELSE series :=13;
+                END IF;
+                INSERT INTO public.author values (authorId,authorname,numofbooks,series);
+                authorId :=authorId + 1;
+                END LOOP;
+            END;
+            $$
+            LANGUAGE plpgsql;
+            SELECT lab5_author();
         </sql>
     </changeSet>
 
