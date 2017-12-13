@@ -1,0 +1,298 @@
+DROP TABLE "author", "book","cost","edition","screenadaptation";
+/*--------------------------------------------------CREATE TABLES------------------------------------------------------*/
+
+CREATE TABLE public."author"
+(
+      Id bigint NOT NULL,
+      "authorname" character varying NOT NULL,
+      "numofbooks" integer,
+      "series" integer NOT NULL,
+      CONSTRAINT "author_pkey" PRIMARY KEY (Id)
+);
+
+CREATE TABLE public."book"
+(
+       Id bigint NOT NULL,
+       "bookname" character varying NOT NULL,
+       "dateofpublication" integer NOT NULL,
+       "authorId" bigint REFERENCES "author"(Id) NOT NULL,
+       CONSTRAINT "book_pkey" PRIMARY KEY (Id)
+);
+
+CREATE TABLE public."cost"
+(
+        Id bigint NOT NULL,
+        "number" integer NOT NULL,
+        "high" integer NOT NULL,
+        CONSTRAINT "cost_pkey" PRIMARY KEY (Id)
+);
+
+CREATE TABLE public."edition"
+(
+         Id bigint NOT NULL,
+         "editionname" character varying NOT NULL,
+         "numofcopies" integer NOT NULL,
+    	 "bookId" bigint REFERENCES "book"(Id) NOT NULL,
+    	 "costId" bigint REFERENCES "cost"(Id) NOT NULL,
+         CONSTRAINT "edition_pkey" PRIMARY KEY (Id)
+);
+
+CREATE TABLE public."screenadaptation"
+(
+          Id bigint NOT NULL,
+          "screenadaptationname" character varying  NOT NULL,
+          "year" integer NOT NULL,
+          "mark" integer NOT NULL,
+          "bookId" bigint REFERENCES "book"(Id) NOT NULL,
+          CONSTRAINT "screenadaptation_pkey" PRIMARY KEY (Id)
+);
+
+-- ALTER TABLE "book"
+-- ADD "editionId" bigint REFERENCES "edition"(Id),
+-- ADD "screenadaptationId" bigint REFERENCES "screenadaptation"(Id);
+
+-- ALTER TABLE "cost"
+-- ADD "editionId" bigint REFERENCES "edition"(Id)
+
+CREATE EXTENSION pg_stat_statements
+SELECT  pg_stat_statements
+
+SELECT 
+	  datname, 
+      NOW() - query_start AS duration, 
+      procpid, 
+      current_query	
+    FROM
+      pg_stat_activity 
+    ORDER BY duration DESC;
+/*-----------------------------------------------INSERT TABLES---------------------------------------------------*/
+
+/*-------------------------------------------AUTHOR-----------------------------------------*/
+DROP FUNCTION lab5_author();
+            CREATE OR REPLACE FUNCTION lab5_author()
+            returns void
+            AS $$
+            DECLARE
+              authorId BIGINT;
+              authorname VARCHAR;
+              numofbooks INTEGER;
+              series INTEGER;
+            BEGIN
+              authorId := 1;
+              FOR i IN 1..2000 LOOP
+                numofbooks :=1289 + authorId;
+                IF authorId BETWEEN 1 AND 67  THEN
+                  authorname := 'Alex';
+                ELSIF authorId BETWEEN 85 AND 259  THEN
+                  authorname := 'Max';
+                ELSE authorname :='Ivan';
+                END IF;
+
+                IF authorId BETWEEN 1 AND 67 THEN
+                  series := 9;
+                ELSIF authorId BETWEEN 85 AND 259 THEN
+                  series := 23;
+                ELSE series :=13;
+                END IF;
+                INSERT INTO public.author values (authorId,authorname,numofbooks,series);
+                authorId :=authorId + 1;
+                END LOOP;
+            END;
+            $$
+            LANGUAGE plpgsql;
+SELECT lab5_author();
+
+/*-------------------------------------------BOOK-----------------------------------------------------------*/
+DROP FUNCTION lab5_book();
+            CREATE OR REPLACE FUNCTION lab5_book()
+            returns void
+            AS $$
+              DECLARE
+                bookId BIGINT;
+                bookname VARCHAR;
+                dateofpublication INTEGER;
+                authorId BIGINT;
+                editionId BIGINT;
+                screenadaptationId BIGINT;
+              BEGIN
+                bookId := 1;
+                /*screenadaptationId := 1;
+                editionId := 1;*/
+                FOR i IN 1..2000 LOOP
+                  bookname := 'Hourseman'|| bookId ;
+                  IF bookId BETWEEN 1 AND 67 THEN
+                    dateofpublication := 1973;
+                  ELSIF bookId BETWEEN 85 AND 259 THEN
+                    dateofpublication := 1753;
+                  ELSE dateofpublication := 1934;
+                  END IF;
+
+                  IF bookId BETWEEN 1 AND 84 THEN
+                    authorId := 2;
+                  ELSIF bookId BETWEEN 98 AND 389 THEN
+                    authorId := 13;
+                  ELSE authorId := 56; 
+                  END IF;
+                  IF editionId is null AND screenadaptationId is null THEN 
+                  	INSERT INTO public.book values (bookId,bookname,dateofpublication,authorId);
+                  ELSE
+                  	INSERT INTO public.book values (bookId,bookname,dateofpublication,authorId,editionId,screenadaptationId);
+                    editionId := editionId +1;
+                    screenadaptationId := screenadaptationId + 1;
+                  END IF;
+                  bookId :=bookId + 1;
+                  END LOOP;
+              END;
+            $$
+            LANGUAGE plpgsql;
+SELECT lab5_book();
+
+/*----------------------------------------------COST---------------------------------------------------------------*/
+DROP FUNCTION lab5_cost();
+            CREATE OR REPLACE FUNCTION lab5_cost()
+            returns void
+            AS $$
+            DECLARE
+            costId BIGINT;
+            number INTEGER ;
+            high INTEGER;
+            BEGIN
+            costId := 1;
+            FOR costId IN 1..2000 LOOP
+            number :=130 + costId ;
+            IF costId BETWEEN 1 AND 78 THEN
+            high := 7;
+            ELSIF costId BETWEEN 85 AND 259 THEN
+            high := 9;
+            ELSE high :=12; 
+            END IF;
+            INSERT INTO public.cost values (costId,number,high);
+            costId :=costId + 1;
+            END LOOP;
+            END;
+            $$
+            LANGUAGE plpgsql;
+SELECT lab5_cost();
+
+/*----------------------------------------------EDITION---------------------------------------------------------------*/
+
+DROP FUNCTION lab5_edition();
+            CREATE OR REPLACE FUNCTION lab5_edition()
+            returns void
+            AS $$
+            DECLARE
+            editionId BIGINT;
+            editionname VARCHAR ;
+            numofcopies INTEGER;
+            bookId BIGINT;
+            costId BIGINT;
+            BEGIN
+            editionId := 1;
+            FOR i IN 1..2000 LOOP
+            editionname :='Volga'|| editionId;
+            IF editionId BETWEEN 1 AND 86 THEN
+             numofcopies := 12994;
+            ELSIF editionId BETWEEN 178 AND 589 THEN
+            numofcopies := 12343;
+            ELSE numofcopies :=29400; 
+            END IF;
+
+            IF editionId BETWEEN 1 AND 391 THEN
+            bookId := 18;
+            ELSIF editionId BETWEEN 435 AND 748 THEN
+            bookId := 7;
+            ELSE bookId :=28; 
+            END IF;
+            
+            IF editionId BETWEEN 1 AND 239 THEN
+            costId := 23;
+            ELSIF editionId BETWEEN 384 AND 598 THEN
+            costId := 4;
+            ELSE costId :=15; 
+            END IF;
+            
+            INSERT INTO public.edition values (editionId,editionname,numofcopies,bookId,costId);
+            editionId :=editionId + 1;
+            END LOOP;
+            END;
+            $$
+            LANGUAGE plpgsql;
+SELECT lab5_edition();
+/*----------------------------------------------SCREENADAPTATION----------------------------------------------------------*/
+
+DROP FUNCTION lab5_screenadaptation();
+            CREATE OR REPLACE FUNCTION lab5_screenadaptation()
+            returns void
+            AS $$
+            DECLARE
+            screenadaptationId BIGINT;
+            screenadaptationname VARCHAR ;
+            year INTEGER;
+            mark INTEGER;
+            bookId BIGINT;
+
+            BEGIN
+            screenadaptationId := 1;
+            year := 1900;
+            FOR i IN 1..2000 LOOP
+            screenadaptationname :='Monte Cristo'||screenadaptationId;
+            IF screenadaptationId BETWEEN 1 AND 278 THEN
+            bookId := 12;
+            ELSIF screenadaptationId BETWEEN 369 AND 689 THEN
+            bookId := 23;
+            ELSE bookId :=11; 
+            END IF;
+
+            IF screenadaptationId BETWEEN 1 AND 392 THEN
+            mark := 4;
+            ELSIF screenadaptationId BETWEEN 489 AND 894 THEN
+            mark := 5;
+            ELSE mark :=2; 
+            END IF;
+
+            INSERT INTO public.screenadaptation values (screenadaptationId,screenadaptationname,year,mark,bookId);
+            screenadaptationId :=screenadaptationId + 1;
+            year :=year +1;
+            END LOOP;
+            END;
+            $$
+            LANGUAGE plpgsql;
+SELECT lab5_screenadaptation();
+
+
+
+
+/*-----------------------------------------SELECTS-----------------------------------------------------------*/
+
+SELECT "book"."bookId", "book"."bookname" , "book"."editionId"
+            FROM "book"
+            FULL JOIN "edition" ON "edition"."bookId" = "book"."bookId"
+            
+SELECT "author".*, c.*
+            FROM "author"
+            LEFT JOIN (SELECT * FROM "book" WHERE "book"."editionId" BETWEEN 90 AND 1017) AS c
+            ON "author"."authorId" = c."bookId"
+            
+SELECT "cost"."id", "cost"."number"
+FROM "cost"
+WHERE "cost"."number"<166
+
+SELECT "book"."bookname" AS BookName, "author"."authorname" AS AuthorName, "author"."numofbooks"
+FROM "book"
+JOIN "author" ON "book"."authorId" = "author"."id"
+GROUP BY "book"."bookname", "author"."authorname", "author"."numofbooks"
+HAVING "author"."numofbooks" <1992
+ORDER BY "author"."numofbooks" ASC
+
+SELECT "edition"."editionname","edition"."editionId", "edition"."numofcopies"
+FROM "edition"
+GROUP BY "edition"."editionId"
+HAVING "edition"."numofcopies" > 12540 ;
+
+SELECT DISTINCT "author"."authorname" ,"book"."bookname", SUM("author"."numofbooks") AS sumOfBooks
+FROM "author"
+JOIN "book"
+ON "author"."authorId" = "book"."bookId"
+GROUP BY "author"."authorname", "book"."bookname"
+HAVING "author"."authorname" LIKE 'Max'
+ORDER BY "author"."authorname" ;
